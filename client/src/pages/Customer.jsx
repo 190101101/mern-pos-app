@@ -125,7 +125,7 @@ const Customer = () => {
       try{
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/server/user/all`);
         const data = await response.json();
-        setBillItems(data);
+        setUserItems(data);
       }catch(error){
         console.log(error);        
       }
