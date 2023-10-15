@@ -7,7 +7,7 @@ import { Spin } from 'antd';
 
 const Customer = () => {
 
-  const [billItems, setBillItems] = useState([]);
+  const [userItems, setUserItems] = useState([]);
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -121,30 +121,30 @@ const Customer = () => {
 
 
   useEffect(() => {
-    const getBills = async () => {
+    const getUsers = async () => {
       try{
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/server/bill/all`);
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/server/user/all`);
         const data = await response.json();
         setBillItems(data);
       }catch(error){
         console.log(error);        
       }
     }
-    getBills();
+    getUsers();
   }, []);
 
   const columns = [
     {
-      title: 'customer',
-      dataIndex: 'customer',
-      key: 'customer',
-      ...getColumnSearchProps("customer")
+      title: 'username',
+      dataIndex: 'username',
+      key: 'username',
+      ...getColumnSearchProps("username")
     },
     {
-      title: 'phone',
-      dataIndex: 'phone',
-      key: 'phone',
-      ...getColumnSearchProps("phone")
+      title: 'email',
+      dataIndex: 'email',
+      key: 'email',
+      ...getColumnSearchProps("email")
     },
     {
       title: 'createdAt',
@@ -161,7 +161,7 @@ const Customer = () => {
       <Header/>
       <h1 className="text-4xl font-bold text-center">Customers</h1>
       <div className="px-6">
-        <Table rowKey={"_id"} dataSource={billItems} columns={columns} bordered pagination={true} 
+        <Table rowKey={"_id"} dataSource={userItems} columns={columns} bordered pagination={true} 
           scroll={{
             x: 1200,
             y: 300
