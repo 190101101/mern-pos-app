@@ -3,7 +3,6 @@ import Header from '../components/header/Header';
 import {Table, Button, Input, Space} from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { Spin } from 'antd';
 
 const Customer = () => {
 
