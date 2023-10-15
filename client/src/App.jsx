@@ -12,7 +12,6 @@ import Login from './pages/Login';
 
 const App = () => {
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));

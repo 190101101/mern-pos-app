@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import Add from './Add';
 import Edit from './Edit';
+import { useSelector } from 'react-redux';
 
 const Categories = ({category, setCategory, setFiltered, products}) => {
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [categoryTitle, setCategoryTitle] = useState('all');
+  const {user} = useSelector((state) => state.user);
 
   useEffect(() => {
     if(categoryTitle === 'all'){
@@ -30,27 +32,35 @@ const Categories = ({category, setCategory, setFiltered, products}) => {
             </li>
           )}
 
+        {user.status === 'admin' &&
           <li className="bg-green-700 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px] flex justify-center items-center !bg-purple-800 hover:opacity-90" onClick={() => {setIsAddModalOpen(true)}}>
             <PlusOutlined className="md:text-2xl"/>
           </li>
+        }
 
+        {user.status === 'admin' &&
           <li className="bg-green-700 px-6 py-10 text-white cursor-pointer hover:bg-pink-700 transition-all text-center min-w-[145px] flex justify-center items-center !bg-orange-800 hover:opacity-90" onClick={() => {setIsEditModalOpen(true)}}>
             <EditOutlined className="md:text-2xl"/>
           </li>
+        }
 
-          <Add 
-            isAddModalOpen={isAddModalOpen} 
-            setIsAddModalOpen={setIsAddModalOpen}
-            category={category}
-            setCategory={setCategory}
-          />
+          {user.status === 'admin' &&
+            <Add 
+              isAddModalOpen={isAddModalOpen} 
+              setIsAddModalOpen={setIsAddModalOpen}
+              category={category}
+              setCategory={setCategory}
+            />
+          }
 
-          <Edit
-            isEditModalOpen={isEditModalOpen} 
-            setIsEditModalOpen={setIsEditModalOpen}
-            category={category}
-            setCategory={setCategory}
-          />
+          {user.status === 'admin' &&
+            <Edit
+              isEditModalOpen={isEditModalOpen} 
+              setIsEditModalOpen={setIsEditModalOpen}
+              category={category}
+              setCategory={setCategory}
+            />
+          }
       </ul>
     </>
   )
