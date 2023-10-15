@@ -16,7 +16,7 @@ const Statistic = () => {
   useEffect(() => {
     const getProducts = async() => {
       try{
-        const response = await fetch('http://localhost:5000/server/product/all')
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/server/product/all`)
         const data = await response.json();
         setProducts(data);
 
@@ -29,7 +29,7 @@ const Statistic = () => {
   }, []);
 
   const asyncFetch = () => {
-    fetch('http://localhost:5000/server/bill/all')
+    fetch(`${process.env.REACT_APP_SERVER_URL}/server/bill/all`)
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => {

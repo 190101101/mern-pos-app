@@ -135,7 +135,7 @@ const Bill = () => {
     const getBills = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/server/bill/${
+          `${process.env.REACT_APP_SERVER_URL}/server/bill/${
             user.status === "admin" ? "all" : "user/" + user.username
           }`
         );
