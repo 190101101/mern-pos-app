@@ -93,7 +93,6 @@ const Statistic = () => {
     <>
       <Header />
       <h1 className="text-4xl font-bold text-center">Statistic</h1>
-      {data ? (
         <div className="px-6 pb-20 md:pb-0">
           <div className="statistic-section">
             <h2 className="text-lg">
@@ -141,12 +140,6 @@ const Statistic = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <Spin
-          size="large"
-          className="absolute top-0 h-screen w-screen flex justify-center items-center"
-        />
-      )}
     </>
   );
 };
