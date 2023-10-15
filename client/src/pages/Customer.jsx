@@ -1,19 +1,18 @@
-import {useState, useEffect, useRef} from 'react';
-import Header from '../components/header/Header';
-import {Table, Button, Popconfirm, Input, Space} from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import Highlighter from 'react-highlight-words';
-import { Spin } from 'antd';
+import { useState, useEffect, useRef } from "react";
+import Header from "../components/header/Header";
+import { Table, Button, Input, Space } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
+import { Spin } from "antd";
 
 const Customer = () => {
-
   const [billItems, setBillItems] = useState([]);
 
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
 
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
@@ -21,11 +20,17 @@ const Customer = () => {
 
   const handleReset = (clearFilters) => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -36,11 +41,13 @@ const Customer = () => {
           ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
-            display: 'block',
+            display: "block",
           }}
         />
         <Space>
@@ -92,7 +99,7 @@ const Customer = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? '#1677ff' : undefined,
+          color: filtered ? "#1677ff" : undefined,
         }}
       />
     ),
@@ -107,73 +114,82 @@ const Customer = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: '#ffc069',
+            backgroundColor: "#ffc069",
             padding: 0,
           }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text.toString() : ""}
         />
       ) : (
         text
       ),
   });
 
-
   useEffect(() => {
     const getBills = async () => {
-      try{
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/server/bill/all`);
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/server/bill/all`
+        );
         const data = await response.json();
         setBillItems(data);
-      }catch(error){
-        console.log(error);        
+      } catch (error) {
+        console.log(error);
       }
-    }
+    };
     getBills();
   }, []);
 
   const columns = [
     {
-      title: 'customer',
-      dataIndex: 'customer',
-      key: 'customer',
-      ...getColumnSearchProps("customer")
+      title: "customer",
+      dataIndex: "customer",
+      key: "customer",
+      ...getColumnSearchProps("customer"),
     },
     {
-      title: 'phone',
-      dataIndex: 'phone',
-      key: 'phone',
-      ...getColumnSearchProps("phone")
+      title: "phone",
+      dataIndex: "phone",
+      key: "phone",
+      ...getColumnSearchProps("phone"),
     },
     {
-      title: 'createdAt',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render:(text) => {
-        return <span>{text.substring(0, 10)}</span>
-      }
+      title: "createdAt",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => {
+        return <span>{text.substring(0, 10)}</span>;
+      },
     },
   ];
 
   return (
     <>
-      <Header/>
+      <Header />
       <h1 className="text-4xl font-bold text-center">Customers</h1>
-      {billItems.length > 0 ?
-      <div className="px-6">
-        <Table rowKey={"_id"} dataSource={billItems} columns={columns} bordered pagination={true} 
-          scroll={{
-            x: 1200,
-            y: 300
-          }}/>
-      </div>
-      : <Spin 
-          size="large" 
-          className="absolute top-0 h-screen w-screen flex justify-center items-center" />
-        }
-    </>  
-  )
-}
+      {billItems.length > 0 ? (
+        <div className="px-6">
+          <Table
+            rowKey={"_id"}
+            dataSource={billItems}
+            columns={columns}
+            bordered
+            pagination={true}
+            scroll={{
+              x: 1200,
+              y: 300,
+            }}
+          />
+        </div>
+      ) : (
+        <Spin
+          size="large"
+          className="absolute top-0 h-screen w-screen flex justify-center items-center"
+        />
+      )}
+    </>
+  );
+};
 
-export default Customer
+export default Customer;

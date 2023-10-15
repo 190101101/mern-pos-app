@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Table, Button, Popconfirm, Input, Space } from "antd";
+import { Table, Button, Input, Space } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import Header from "../components/header/Header";
@@ -136,10 +136,10 @@ const Bill = () => {
       try {
         const response = await fetch(
           `http://localhost:5000/server/bill/${
-            user.status == "admin" ? "all" : "user/" + user.username
+            user.status === "admin" ? "all" : "user/" + user.username
           }`
-          );
-          
+        );
+
         const data = await response.json();
         setBillItems(data);
       } catch (error) {
